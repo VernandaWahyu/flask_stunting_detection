@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Detection Stunting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f8f9fa;
+            /* Light gray background color */
+            margin: 0;
+        }
+
+        nav {
+            background-color: #007bff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0 15px;
+        }
+
+        form {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            /* White background color */
+            padding: 30px;
+            margin: 20px auto;
+            transition: box-shadow 0.3s ease;
+            /* Smooth transition for box-shadow */
+            animation: fadeInForm 1s ease;
+        }
+
+        form:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+            /* Dark text color */
+        }
+
+        .form-control {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+            /* Smooth transition for border color */
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            /* Border color on focus */
+        }
+
+        #Status_Gizi {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+            animation: fadeInForm 1s ease;
+        }
+
+        /* Add some styling for the submit button */
+        .btn-primary {
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            color: #fff;
+            transition: background-color 0.3s ease;
+            /* Smooth transition for background color */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            /* Darker blue on hover */
+            border: 1px solid #0056b3;
+        }
+
+        /* Add styling for the section containing the status message */
+        section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            /* Lighter gray background color */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            /* Initially hidden */
+        }
+
+        /* New animation keyframes */
+        @keyframes fadeInForm {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+    <form id="stuntingForm" action="{{ url_for('predict') }}" method="post">
+        <main class="bg-white p-16 rounded-lg text-center">
+            <h1 class="text-3xl font-bold mb-8">
+                Cek Stunting Bayi Anda
+            </h1>
+            <div class="mb-3 ">
+                <!-- Input Umur -->
+                <label for="Umur" class="form-label">
+                    Umur (Month):
+                    <small class="text-muted">(Masukkan Umur Dalam Bulan)</small>
+                </label>
+                <input type="float" name="Umur" placeholder="" required="required" class="form-control"
+                    style="width: 50%; margin: 0 auto;" />
+            </div>
+
+            <div class="mb-3">
+                <!-- Gender Select -->
+                <label for="Jenis_Kelamin" class="form-label">
+                    Jenis Kelamin (Gender):
+                    <small class="text-muted">(Masukkan Jenis Kelamin)</small>
+                </label>
+                <select name="Jenis_Kelamin" id="Jenis_Kelamin" required="required" class="form-control"
+                    style="width: 50%; margin: 0 auto;">
+                    <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                    <option value="0">Laki-Laki</option>
+                    <option value="1">Perempuan</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <!-- Input Tinggi Badan -->
+                <label for="Tinggi_Badan" class="form-label">
+                    Tinggi Badan (Cm):
+                    <small class="text-muted">(Masukkan Tinggi Badan)</small>
+                </label>
+                <input type="float" name="Tinggi_Badan" placeholder="" required="required" class="form-control"
+                    style="width: 50%; margin: 0 auto;" />
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary mt-4">
+                Cek Stunting
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-arrow-right ml-2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </main>
+    </form>
+    <section id="statusSection">
+        <div>
+            <h1 class="text-2xl mb-8 text-center" id="Status_Gizi">
+                {% if Status_Gizi== 0 %}
+                Severely Stunted
+                {% elif Status_Gizi == 1.0 %}
+                Stunted
+                {% elif Status_Gizi == 2.0 %}
+                Normal
+                {% elif Status_Gizi == 3.0 %}
+                Tinggi
+                {% else %}
+                Tidak Diketahui
+                {% endif %}
+            </h1>
+        </div>
+    </section>
+    <script>
+        // Adding interactivity with JavaScript
+        const form = document.getElementById('stuntingForm');
+        const statusSection = document.getElementById('statusSection');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Simulating an asynchronous operation (replace with actual AJAX call if needed)
+            setTimeout(() => {
+                // Display the status section
+                statusSection.style.display = 'block';
+
+                // Update the status message (replace with actual result)
+                const statusMessage = document.getElementById('Status_Gizi');
+                statusMessage.innerHTML = 'Normal'; // Replace with your actual result
+            }, 1000); // Simulating a delay for demonstration purposes
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
